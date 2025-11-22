@@ -1,4 +1,4 @@
-import type { User, Task, LeaderboardEntry, Reward, Student, Class, PerformanceData, Notification } from './types';
+import type { User, Task, LeaderboardEntry, Reward, Student, Class, PerformanceData, Notification, Message, Conversation, Quiz, QuizAttempt, AppNotification, Team, StudyGroup, VideoLesson, VideoProgress, Playlist, Note, Tournament, PeerReview, Flashcard, FlashcardDeck, WeakArea, LearningPath, AIInsight, AIPrediction, AIRiskAlert, AIRecommendation } from './types';
 
 export const MOCK_USERS: User[] = [
   {
@@ -327,5 +327,675 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
   { id: 'n8', title: 'Task Graded', message: 'Your Math quiz has been graded: B+', type: 'SUCCESS', read: false, timestamp: '2023-10-01T12:00:00Z' },
   { id: 'n9', title: 'XP Milestone', message: 'You reached 1000 XP! Level up!', type: 'SUCCESS', read: true, timestamp: '2023-09-30T10:00:00Z' },
   { id: 'n10', title: 'New Task Assigned', message: 'Chemistry lab report due next week', type: 'INFO', read: false, timestamp: '2023-09-29T14:15:00Z' },
+];
+
+// Messaging System Mock Data
+export const MOCK_CONVERSATIONS: Conversation[] = [
+  {
+    id: 'conv1',
+    type: 'DIRECT',
+    participants: ['u5', 'u1'],
+    unreadCount: 2,
+    lastMessage: {
+      id: 'msg1',
+      conversationId: 'conv1',
+      senderId: 'u1',
+      senderName: 'Alice Teacher',
+      content: 'Great work on the assignment!',
+      timestamp: '2023-10-08T14:30:00Z',
+      read: false,
+    },
+    createdAt: '2023-10-01T10:00:00Z',
+  },
+  {
+    id: 'conv2',
+    type: 'GROUP',
+    name: 'Math Study Group',
+    participants: ['u5', 'u6', 'u7', 'u8'],
+    unreadCount: 5,
+    lastMessage: {
+      id: 'msg2',
+      conversationId: 'conv2',
+      senderId: 'u6',
+      senderName: 'Emma Wilson',
+      content: 'Can someone help with problem 5?',
+      timestamp: '2023-10-08T15:00:00Z',
+      read: false,
+    },
+    createdAt: '2023-09-15T09:00:00Z',
+  },
+  {
+    id: 'conv3',
+    type: 'CLASS',
+    name: 'Grade 10 - Section A',
+    participants: ['u1', 'u5', 'u6', 'u7', 'u8', 'u9'],
+    unreadCount: 0,
+    lastMessage: {
+      id: 'msg3',
+      conversationId: 'conv3',
+      senderId: 'u1',
+      senderName: 'Alice Teacher',
+      content: 'Reminder: Quiz tomorrow at 9 AM',
+      timestamp: '2023-10-08T10:00:00Z',
+      read: true,
+    },
+    createdAt: '2023-09-01T08:00:00Z',
+  },
+];
+
+export const MOCK_MESSAGES: Record<string, Message[]> = {
+  conv1: [
+    {
+      id: 'msg1',
+      conversationId: 'conv1',
+      senderId: 'u1',
+      senderName: 'Alice Teacher',
+      senderAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice',
+      content: 'Great work on the assignment!',
+      timestamp: '2023-10-08T14:30:00Z',
+      read: false,
+    },
+    {
+      id: 'msg2',
+      conversationId: 'conv1',
+      senderId: 'u5',
+      senderName: 'Charlie Brown',
+      senderAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie',
+      content: 'Thank you! I really enjoyed working on it.',
+      timestamp: '2023-10-08T14:25:00Z',
+      read: true,
+    },
+  ],
+  conv2: [
+    {
+      id: 'msg3',
+      conversationId: 'conv2',
+      senderId: 'u6',
+      senderName: 'Emma Wilson',
+      senderAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Emma',
+      content: 'Can someone help with problem 5?',
+      timestamp: '2023-10-08T15:00:00Z',
+      read: false,
+    },
+    {
+      id: 'msg4',
+      conversationId: 'conv2',
+      senderId: 'u5',
+      senderName: 'Charlie Brown',
+      senderAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie',
+      content: 'Sure! I can help. What part are you stuck on?',
+      timestamp: '2023-10-08T14:45:00Z',
+      read: true,
+    },
+  ],
+};
+
+// Interactive Quizzes Mock Data
+export const MOCK_QUIZZES: Quiz[] = [
+  {
+    id: 'quiz1',
+    title: 'Math Fundamentals Quiz',
+    description: 'Test your understanding of basic algebra and geometry',
+    subject: 'Math',
+    createdBy: 'u1',
+    createdAt: '2023-10-01T10:00:00Z',
+    timeLimit: 30,
+    totalQuestions: 10,
+    totalPoints: 100,
+    attempts: 0,
+    maxAttempts: 3,
+    questions: [
+      {
+        id: 'q1',
+        type: 'MULTIPLE_CHOICE',
+        question: 'What is 2x + 5 = 15?',
+        options: ['x = 5', 'x = 10', 'x = 7.5', 'x = 20'],
+        correctAnswer: 'x = 5',
+        points: 10,
+        explanation: 'Subtract 5 from both sides: 2x = 10, then divide by 2: x = 5',
+      },
+      {
+        id: 'q2',
+        type: 'TRUE_FALSE',
+        question: 'A triangle always has three sides.',
+        options: ['True', 'False'],
+        correctAnswer: 'True',
+        points: 10,
+        explanation: 'By definition, a triangle is a polygon with exactly three sides.',
+      },
+    ],
+    status: 'ACTIVE',
+    dueDate: '2023-10-15T23:59:59Z',
+  },
+  {
+    id: 'quiz2',
+    title: 'Science Quiz: Photosynthesis',
+    description: 'Test your knowledge about plant biology',
+    subject: 'Science',
+    createdBy: 'u3',
+    createdAt: '2023-10-05T09:00:00Z',
+    timeLimit: 20,
+    totalQuestions: 8,
+    totalPoints: 80,
+    attempts: 1,
+    maxAttempts: 2,
+    questions: [
+      {
+        id: 'q3',
+        type: 'MULTIPLE_CHOICE',
+        question: 'What is the primary product of photosynthesis?',
+        options: ['Oxygen', 'Glucose', 'Carbon Dioxide', 'Water'],
+        correctAnswer: 'Glucose',
+        points: 10,
+        explanation: 'Glucose (C6H12O6) is the primary product, while oxygen is a byproduct.',
+      },
+    ],
+    status: 'ACTIVE',
+    dueDate: '2023-10-20T23:59:59Z',
+  },
+];
+
+// Notification Center Mock Data
+export const MOCK_APP_NOTIFICATIONS: AppNotification[] = [
+  {
+    id: 'an1',
+    userId: 'u5',
+    type: 'TASK',
+    title: 'New Task Assigned',
+    message: 'Math assignment "Quadratic Equations" is due in 2 days',
+    read: false,
+    timestamp: '2023-10-08T10:00:00Z',
+    actionUrl: '/tasks',
+    icon: '📝',
+    priority: 'HIGH',
+  },
+  {
+    id: 'an2',
+    userId: 'u5',
+    type: 'GRADE',
+    title: 'Assignment Graded',
+    message: 'Your History essay received an A grade!',
+    read: false,
+    timestamp: '2023-10-08T09:30:00Z',
+    actionUrl: '/tasks',
+    icon: '🎉',
+    priority: 'MEDIUM',
+  },
+  {
+    id: 'an3',
+    userId: 'u5',
+    type: 'MESSAGE',
+    title: 'New Message',
+    message: 'Alice Teacher sent you a message',
+    read: false,
+    timestamp: '2023-10-08T08:15:00Z',
+    actionUrl: '/messages',
+    icon: '💬',
+    priority: 'MEDIUM',
+  },
+  {
+    id: 'an4',
+    userId: 'u5',
+    type: 'ACHIEVEMENT',
+    title: 'Badge Unlocked',
+    message: 'You earned the "Math Wizard" badge!',
+    read: true,
+    timestamp: '2023-10-07T16:00:00Z',
+    actionUrl: '/badges',
+    icon: '🏆',
+    priority: 'LOW',
+  },
+  {
+    id: 'an5',
+    userId: 'u5',
+    type: 'ANNOUNCEMENT',
+    title: 'School Holiday',
+    message: 'School will be closed on October 15th for Diwali',
+    read: false,
+    timestamp: '2023-10-07T12:00:00Z',
+    actionUrl: '/announcements',
+    icon: '📢',
+    priority: 'HIGH',
+  },
+];
+
+// Teams/Clans Mock Data
+export const MOCK_TEAMS: Team[] = [
+  {
+    id: 'team1',
+    name: 'Math Masters',
+    description: 'A team dedicated to excelling in mathematics',
+    avatar: 'https://api.dicebear.com/7.x/shapes/svg?seed=MathMasters',
+    leaderId: 'u5',
+    leaderName: 'Charlie Brown',
+    members: [
+      { userId: 'u5', userName: 'Charlie Brown', userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie', role: 'LEADER', joinedAt: '2023-09-01T10:00:00Z', contributionXP: 1250 },
+      { userId: 'u6', userName: 'Emma Wilson', userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Emma', role: 'MEMBER', joinedAt: '2023-09-05T14:00:00Z', contributionXP: 980 },
+      { userId: 'u7', userName: 'David Lee', userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=David', role: 'MEMBER', joinedAt: '2023-09-10T09:00:00Z', contributionXP: 1100 },
+    ],
+    totalXP: 3330,
+    rank: 1,
+    createdAt: '2023-09-01T10:00:00Z',
+    achievements: ['b2', 'b8'],
+    stats: {
+      totalTasksCompleted: 45,
+      averageScore: 92,
+      activeMembers: 3,
+    },
+  },
+  {
+    id: 'team2',
+    name: 'Science Squad',
+    description: 'Exploring the wonders of science together',
+    avatar: 'https://api.dicebear.com/7.x/shapes/svg?seed=ScienceSquad',
+    leaderId: 'u8',
+    leaderName: 'Olivia Martinez',
+    members: [
+      { userId: 'u8', userName: 'Olivia Martinez', userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Olivia', role: 'LEADER', joinedAt: '2023-09-02T11:00:00Z', contributionXP: 1050 },
+      { userId: 'u9', userName: 'James Taylor', userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=James', role: 'MEMBER', joinedAt: '2023-09-03T15:00:00Z', contributionXP: 890 },
+    ],
+    totalXP: 1940,
+    rank: 2,
+    createdAt: '2023-09-02T11:00:00Z',
+    achievements: ['b3'],
+    stats: {
+      totalTasksCompleted: 32,
+      averageScore: 88,
+      activeMembers: 2,
+    },
+  },
+];
+
+// Phase 2 Mock Data - Study Groups
+export const MOCK_STUDY_GROUPS: StudyGroup[] = [
+  {
+    id: 'sg1',
+    name: 'Math Study Group',
+    description: 'Collaborative learning for advanced mathematics',
+    subject: 'Math',
+    createdBy: 'u5',
+    createdAt: '2023-09-15T10:00:00Z',
+    members: [
+      { userId: 'u5', userName: 'Charlie Brown', userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie', role: 'CREATOR', joinedAt: '2023-09-15T10:00:00Z', contributionXP: 500 },
+      { userId: 'u6', userName: 'Emma Wilson', userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Emma', role: 'MEMBER', joinedAt: '2023-09-16T14:00:00Z', contributionXP: 350 },
+      { userId: 'u7', userName: 'David Lee', userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=David', role: 'MEMBER', joinedAt: '2023-09-17T09:00:00Z', contributionXP: 420 },
+    ],
+    resources: [],
+    challenges: ['c1', 'c2'],
+    totalXP: 1270,
+  },
+  {
+    id: 'sg2',
+    name: 'Science Explorers',
+    description: 'Exploring the wonders of science together',
+    subject: 'Science',
+    createdBy: 'u8',
+    createdAt: '2023-09-20T11:00:00Z',
+    members: [
+      { userId: 'u8', userName: 'Olivia Martinez', userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Olivia', role: 'CREATOR', joinedAt: '2023-09-20T11:00:00Z', contributionXP: 600 },
+      { userId: 'u9', userName: 'James Taylor', userAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=James', role: 'MEMBER', joinedAt: '2023-09-21T15:00:00Z', contributionXP: 450 },
+    ],
+    resources: [],
+    challenges: ['c3'],
+    totalXP: 1050,
+  },
+];
+
+// Video Lessons Mock Data
+export const MOCK_VIDEO_LESSONS: VideoLesson[] = [
+  {
+    id: 'v1',
+    title: 'Introduction to Algebra',
+    description: 'Learn the fundamentals of algebraic expressions and equations',
+    subject: 'Math',
+    videoUrl: 'https://example.com/video1.mp4',
+    thumbnailUrl: 'https://via.placeholder.com/640x360',
+    duration: 1800, // 30 minutes
+    createdBy: 'u1',
+    createdAt: '2023-10-01T10:00:00Z',
+    xpReward: 100,
+    quizzes: ['quiz1'],
+    views: 245,
+    likes: 32,
+  },
+  {
+    id: 'v2',
+    title: 'Photosynthesis Explained',
+    description: 'Understanding how plants convert light into energy',
+    subject: 'Science',
+    videoUrl: 'https://example.com/video2.mp4',
+    thumbnailUrl: 'https://via.placeholder.com/640x360',
+    duration: 1200, // 20 minutes
+    createdBy: 'u3',
+    createdAt: '2023-10-05T09:00:00Z',
+    xpReward: 80,
+    views: 189,
+    likes: 28,
+  },
+];
+
+export const MOCK_PLAYLISTS: Playlist[] = [
+  {
+    id: 'p1',
+    name: 'Math Fundamentals',
+    description: 'Complete guide to basic mathematics',
+    createdBy: 'u1',
+    videoIds: ['v1'],
+    createdAt: '2023-10-01T10:00:00Z',
+  },
+];
+
+// Notes & Study Materials Mock Data
+export const MOCK_NOTES: Note[] = [
+  {
+    id: 'n1',
+    title: 'Algebra Formulas Cheat Sheet',
+    content: '# Algebra Formulas\n\n## Basic Formulas\n- Quadratic Formula: x = (-b ± √(b²-4ac)) / 2a\n- Slope: m = (y₂ - y₁) / (x₂ - x₁)',
+    subject: 'Math',
+    createdBy: 'u5',
+    createdAt: '2023-10-01T10:00:00Z',
+    updatedAt: '2023-10-05T14:00:00Z',
+    isPublic: true,
+    sharedWith: ['u6', 'u7'],
+    tags: ['formulas', 'algebra', 'cheat-sheet'],
+    collaborators: ['u6'],
+  },
+  {
+    id: 'n2',
+    title: 'Photosynthesis Notes',
+    content: '# Photosynthesis\n\n## Process\n1. Light absorption\n2. Water splitting\n3. CO₂ fixation',
+    subject: 'Science',
+    createdBy: 'u8',
+    createdAt: '2023-10-03T11:00:00Z',
+    updatedAt: '2023-10-03T11:00:00Z',
+    isPublic: false,
+    sharedWith: ['u9'],
+    tags: ['biology', 'photosynthesis'],
+    collaborators: [],
+  },
+];
+
+// Phase 3 Mock Data - Tournaments
+export const MOCK_TOURNAMENTS: Tournament[] = [
+  {
+    id: 'tour1',
+    name: 'October Math Challenge',
+    description: 'Compete in math quizzes and earn the highest score',
+    type: 'MONTHLY',
+    startDate: '2023-10-01T00:00:00Z',
+    endDate: '2023-10-31T23:59:59Z',
+    status: 'ACTIVE',
+    prizePool: {
+      first: 5000,
+      second: 3000,
+      third: 1000,
+    },
+    participants: ['team1', 'team2'],
+    leaderboard: [
+      { id: 'team1', name: 'Math Masters', score: 8500, rank: 1, progress: 85 },
+      { id: 'team2', name: 'Science Squad', score: 7200, rank: 2, progress: 72 },
+    ],
+    rules: [
+      'Complete at least 10 quizzes',
+      'Highest total score wins',
+      'No cheating allowed',
+    ],
+  },
+];
+
+// Peer Review Mock Data
+export const MOCK_PEER_REVIEWS: PeerReview[] = [
+  {
+    id: 'pr1',
+    taskId: 't1',
+    taskTitle: 'Math Assignment: Quadratic Equations',
+    reviewerId: 'u6',
+    reviewerName: 'Emma Wilson',
+    revieweeId: 'u5',
+    revieweeName: 'Charlie Brown',
+    submissionId: 'sub1',
+    rating: 5,
+    feedback: 'Excellent work! Your explanations are very clear and well-structured.',
+    strengths: ['Clear explanations', 'Good use of examples', 'Neat presentation'],
+    improvements: ['Could add more practice problems'],
+    submittedAt: '2023-10-08T14:00:00Z',
+    xpEarned: 50,
+  },
+];
+
+// Flashcards Mock Data
+export const MOCK_FLASHCARD_DECKS: FlashcardDeck[] = [
+  {
+    id: 'deck1',
+    name: 'Algebra Formulas',
+    description: 'Essential algebra formulas and equations',
+    subject: 'Math',
+    createdBy: 'u5',
+    createdAt: '2023-10-01T10:00:00Z',
+    isPublic: true,
+    cardIds: ['fc1', 'fc2', 'fc3'],
+    totalCards: 3,
+    studyCount: 45,
+  },
+];
+
+export const MOCK_FLASHCARDS: Flashcard[] = [
+  {
+    id: 'fc1',
+    front: 'What is the quadratic formula?',
+    back: 'x = (-b ± √(b²-4ac)) / 2a',
+    subject: 'Math',
+    tags: ['algebra', 'formula'],
+    difficulty: 'MEDIUM',
+    lastReviewed: '2023-10-08T10:00:00Z',
+    nextReview: '2023-10-10T10:00:00Z',
+    reviewCount: 5,
+    correctCount: 4,
+    masteryLevel: 80,
+  },
+  {
+    id: 'fc2',
+    front: 'What is photosynthesis?',
+    back: 'The process by which plants convert light energy into chemical energy (glucose)',
+    subject: 'Science',
+    tags: ['biology', 'photosynthesis'],
+    difficulty: 'EASY',
+    lastReviewed: '2023-10-07T14:00:00Z',
+    nextReview: '2023-10-09T14:00:00Z',
+    reviewCount: 3,
+    correctCount: 3,
+    masteryLevel: 100,
+  },
+];
+
+// Learning Analytics Mock Data
+export const MOCK_WEAK_AREAS: WeakArea[] = [
+  {
+    subject: 'Math',
+    topic: 'Calculus',
+    score: 65,
+    recommendation: 'Focus on practicing derivative problems',
+    resources: ['v1', 'quiz1'],
+  },
+  {
+    subject: 'Science',
+    topic: 'Organic Chemistry',
+    score: 70,
+    recommendation: 'Review chemical bonding concepts',
+    resources: ['v2'],
+  },
+];
+
+// AI Features Mock Data
+export const MOCK_AI_INSIGHTS: AIInsight[] = [
+  {
+    id: 'ai1',
+    type: 'PREDICTION',
+    title: 'Math Performance Expected to Improve',
+    description: 'Based on recent engagement patterns, Math performance is predicted to increase by 12% in the next month. Students are showing increased activity in Math-related tasks.',
+    confidence: 87,
+    impact: 'HIGH',
+    category: 'PERFORMANCE',
+    timestamp: '2023-10-08T10:00:00Z',
+    actionable: true,
+    actionItems: ['Increase Math task difficulty', 'Add more Math challenges', 'Recognize top performers'],
+    relatedData: {
+      metric: 'Math Task Completion',
+      value: 78,
+      trend: 'UP',
+    },
+  },
+  {
+    id: 'ai2',
+    type: 'RISK',
+    title: '5 Students at Risk of Falling Behind',
+    description: 'AI has identified 5 students showing declining engagement patterns. Early intervention recommended to prevent academic setbacks.',
+    confidence: 92,
+    impact: 'HIGH',
+    category: 'ENGAGEMENT',
+    timestamp: '2023-10-08T09:30:00Z',
+    actionable: true,
+    actionItems: ['Schedule one-on-one meetings', 'Assign mentor support', 'Create personalized learning plans'],
+  },
+  {
+    id: 'ai3',
+    type: 'OPPORTUNITY',
+    title: 'High Engagement in Science Content',
+    description: 'Science videos and quizzes are receiving 40% more engagement than average. Consider expanding Science content library.',
+    confidence: 85,
+    impact: 'MEDIUM',
+    category: 'ENGAGEMENT',
+    timestamp: '2023-10-08T08:15:00Z',
+    actionable: true,
+    actionItems: ['Add more Science video lessons', 'Create Science tournament', 'Feature Science achievements'],
+    relatedData: {
+      metric: 'Science Engagement',
+      value: 140,
+      trend: 'UP',
+    },
+  },
+  {
+    id: 'ai4',
+    type: 'TREND',
+    title: 'Gamification Elements Driving 25% More Participation',
+    description: 'Students with active streaks and badges show 25% higher task completion rates. Gamification is proving highly effective.',
+    confidence: 94,
+    impact: 'HIGH',
+    category: 'ENGAGEMENT',
+    timestamp: '2023-10-07T16:00:00Z',
+    actionable: true,
+    actionItems: ['Introduce new badge categories', 'Create streak challenges', 'Enhance reward system'],
+  },
+  {
+    id: 'ai5',
+    type: 'RECOMMENDATION',
+    title: 'Optimal Study Time Identified',
+    description: 'AI analysis shows peak learning occurs between 2-4 PM. Consider scheduling important quizzes during this window.',
+    confidence: 78,
+    impact: 'MEDIUM',
+    category: 'LEARNING',
+    timestamp: '2023-10-07T14:00:00Z',
+    actionable: true,
+    actionItems: ['Schedule quizzes in afternoon', 'Send study reminders at optimal times'],
+  },
+];
+
+export const MOCK_AI_PREDICTIONS: AIPrediction[] = [
+  {
+    id: 'pred1',
+    target: 'Student Performance',
+    prediction: 'Overall class performance expected to improve by 8% in next quarter',
+    confidence: 82,
+    timeframe: 'Next 30 days',
+    factors: ['Increased engagement', 'Better attendance', 'Improved task completion'],
+    recommendation: 'Maintain current teaching strategies and continue gamification efforts',
+  },
+  {
+    id: 'pred2',
+    target: 'Dropout Risk',
+    prediction: 'Low risk of student dropouts (2% probability)',
+    confidence: 91,
+    timeframe: 'Next 90 days',
+    factors: ['High engagement rates', 'Strong attendance', 'Positive social interactions'],
+    recommendation: 'Continue monitoring but no immediate intervention needed',
+  },
+  {
+    id: 'pred3',
+    target: 'Subject Performance',
+    prediction: 'History scores may decline by 5% if current trends continue',
+    confidence: 75,
+    timeframe: 'Next 30 days',
+    factors: ['Lower engagement in History', 'Fewer History tasks completed', 'Reduced time spent on History'],
+    recommendation: 'Increase History content variety and introduce interactive elements',
+  },
+];
+
+export const MOCK_AI_RISK_ALERTS: AIRiskAlert[] = [
+  {
+    id: 'risk1',
+    studentId: 'u5',
+    studentName: 'Charlie Brown',
+    riskType: 'ACADEMIC',
+    severity: 'MEDIUM',
+    description: 'Math scores have declined 15% over the past month. Student may need additional support.',
+    indicators: ['Declining quiz scores', 'Reduced task completion', 'Lower engagement'],
+    suggestedActions: ['Schedule tutoring session', 'Assign peer mentor', 'Provide additional resources'],
+    detectedAt: '2023-10-08T10:00:00Z',
+  },
+  {
+    id: 'risk2',
+    studentId: 'u7',
+    studentName: 'David Lee',
+    riskType: 'ATTENDANCE',
+    severity: 'HIGH',
+    description: 'Attendance has dropped to 75% this month. Risk of falling behind.',
+    indicators: ['Multiple absences', 'Missed assignments', 'No login activity'],
+    suggestedActions: ['Contact parents', 'Schedule meeting', 'Create catch-up plan'],
+    detectedAt: '2023-10-08T09:00:00Z',
+  },
+  {
+    id: 'risk3',
+    studentId: 'u9',
+    studentName: 'James Taylor',
+    riskType: 'ENGAGEMENT',
+    severity: 'LOW',
+    description: 'Engagement levels below average but stable. Monitor for changes.',
+    indicators: ['Lower task participation', 'Reduced XP earning'],
+    suggestedActions: ['Send encouragement message', 'Assign engaging tasks', 'Highlight achievements'],
+    detectedAt: '2023-10-07T15:00:00Z',
+  },
+];
+
+export const MOCK_AI_RECOMMENDATIONS: AIRecommendation[] = [
+  {
+    id: 'rec1',
+    title: 'Implement Adaptive Learning Paths',
+    description: 'AI suggests creating personalized learning paths for students based on their performance data. This could improve outcomes by 20%.',
+    category: 'CURRICULUM',
+    priority: 'HIGH',
+    estimatedImpact: '20% improvement in student outcomes',
+    implementationEffort: 'MEDIUM',
+    relatedInsights: ['ai1', 'ai4'],
+  },
+  {
+    id: 'rec2',
+    title: 'Early Intervention Program',
+    description: 'Establish an early intervention program for at-risk students. AI predicts this could reduce dropout rates by 30%.',
+    category: 'INTERVENTION',
+    priority: 'HIGH',
+    estimatedImpact: '30% reduction in dropout risk',
+    implementationEffort: 'HIGH',
+    relatedInsights: ['ai2'],
+  },
+  {
+    id: 'rec3',
+    title: 'Expand Science Content',
+    description: 'Given high engagement in Science content, consider adding more interactive Science modules and resources.',
+    category: 'RESOURCE',
+    priority: 'MEDIUM',
+    estimatedImpact: '15% increase in Science performance',
+    implementationEffort: 'LOW',
+    relatedInsights: ['ai3'],
+  },
 ];
 

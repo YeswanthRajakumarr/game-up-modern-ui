@@ -20,7 +20,15 @@ import {
   Award,
   Flame,
   Target,
-  Zap
+  Zap,
+  MessageCircle,
+  HelpCircle,
+  Users as UsersIcon,
+  Video,
+  FileText as FileTextIcon,
+  BarChart3,
+  Users as UsersGroup,
+  ClipboardCheck
 } from 'lucide-react';
 import { useAuth } from '../global-context/AuthContext';
 import { Icon3D, Icon3DEnhanced } from '../../shared/components/Icon3D';
@@ -39,6 +47,9 @@ export const Sidebar = () => {
           { label: 'Analytics', icon: TrendingUp, to: '/analytics' },
           { label: 'Calendar', icon: Calendar, to: '/calendar' },
           { label: 'Announcements', icon: Bell, to: '/announcements' },
+          { label: 'Messages', icon: MessageCircle, to: '/messages' },
+          { label: 'Notifications', icon: Bell, to: '/notifications' },
+          { label: 'Settings', icon: Settings, to: '/settings' },
         ];
       case 'TEACHER':
         return [
@@ -47,9 +58,16 @@ export const Sidebar = () => {
           { label: 'Gradebook', icon: ClipboardList, to: '/gradebook' },
           { label: 'Attendance', icon: UserCheck, to: '/attendance' },
           { label: 'Leaderboard', icon: Trophy, to: '/leaderboard' },
+          { label: 'Quizzes', icon: HelpCircle, to: '/quizzes' },
+          { label: 'Video Lessons', icon: Video, to: '/videos' },
+          { label: 'Notes', icon: FileTextIcon, to: '/notes' },
+          { label: 'Flashcards', icon: BookOpen, to: '/flashcards' },
+          { label: 'Resources', icon: FolderOpen, to: '/resources' },
           { label: 'Calendar', icon: Calendar, to: '/calendar' },
           { label: 'Announcements', icon: Bell, to: '/announcements' },
-          { label: 'Resources', icon: FolderOpen, to: '/resources' },
+          { label: 'Messages', icon: MessageCircle, to: '/messages' },
+          { label: 'Notifications', icon: Bell, to: '/notifications' },
+          { label: 'Settings', icon: Settings, to: '/settings' },
         ];
       case 'STUDENT':
         return [
@@ -61,19 +79,35 @@ export const Sidebar = () => {
           { label: 'Badges', icon: Award, to: '/badges' },
           { label: 'Streaks', icon: Flame, to: '/streaks' },
           { label: 'XP History', icon: Zap, to: '/xp-history' },
+          { label: 'Teams', icon: UsersIcon, to: '/teams' },
+          { label: 'Study Groups', icon: UsersGroup, to: '/study-groups' },
+          { label: 'Quizzes', icon: HelpCircle, to: '/quizzes' },
+          { label: 'Video Lessons', icon: Video, to: '/videos' },
+          { label: 'Notes', icon: FileTextIcon, to: '/notes' },
+          { label: 'Flashcards', icon: BookOpen, to: '/flashcards' },
+          { label: 'Learning Analytics', icon: BarChart3, to: '/learning-analytics' },
+          { label: 'Tournaments', icon: Trophy, to: '/tournaments' },
+          { label: 'Peer Review', icon: ClipboardCheck, to: '/peer-review' },
           { label: 'Calendar', icon: Calendar, to: '/calendar' },
           { label: 'Announcements', icon: Bell, to: '/announcements' },
           { label: 'Resources', icon: FolderOpen, to: '/resources' },
           { label: 'Reports', icon: FileText, to: '/reports' },
+          { label: 'Messages', icon: MessageCircle, to: '/messages' },
+          { label: 'Notifications', icon: Bell, to: '/notifications' },
+          { label: 'Settings', icon: Settings, to: '/settings' },
         ];
       case 'PARENT':
         return [
+          { label: 'Parent Portal', icon: LayoutDashboard, to: '/parent-portal' },
           { label: 'Child Tasks', icon: BookOpen, to: '/tasks' },
           { label: 'Performance', icon: TrendingUp, to: '/performance' },
           { label: 'Rewards', icon: Gift, to: '/rewards' },
           { label: 'Calendar', icon: Calendar, to: '/calendar' },
           { label: 'Announcements', icon: Bell, to: '/announcements' },
           { label: 'Reports', icon: FileText, to: '/reports' },
+          { label: 'Messages', icon: MessageCircle, to: '/messages' },
+          { label: 'Notifications', icon: Bell, to: '/notifications' },
+          { label: 'Settings', icon: Settings, to: '/settings' },
         ];
       default:
         return [];

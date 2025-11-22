@@ -2,10 +2,78 @@ import type { UserRole } from '../../shared/types';
 
 // Define which routes are allowed for each role
 export const ROLE_ROUTES: Record<UserRole, string[]> = {
-  ADMIN: ['/users', '/classes', '/analytics', '/calendar', '/announcements', '/settings', '/dashboard'],
-  TEACHER: ['/dashboard', '/tasks', '/leaderboard', '/gradebook', '/attendance', '/calendar', '/announcements', '/resources', '/settings'],
-  STUDENT: ['/tasks', '/leaderboard', '/rewards', '/performance', '/calendar', '/announcements', '/resources', '/reports', '/badges', '/streaks', '/challenges', '/xp-history', '/settings'],
-  PARENT: ['/tasks', '/performance', '/rewards', '/calendar', '/announcements', '/reports', '/settings'],
+  // ADMIN: Full system access - Users, Classes, Analytics (with AI), Calendar, Announcements, Messages, Notifications, Settings
+  ADMIN: [
+    '/users',
+    '/classes',
+    '/analytics',
+    '/calendar',
+    '/announcements',
+    '/messages',
+    '/notifications',
+    '/settings',
+  ],
+  
+  // TEACHER: Teaching tools - Dashboard, Tasks, Gradebook, Attendance, Leaderboard, Quizzes, Videos, Notes, Flashcards, Resources, Calendar, Announcements, Messages, Notifications, Settings
+  TEACHER: [
+    '/dashboard',
+    '/tasks',
+    '/gradebook',
+    '/attendance',
+    '/leaderboard',
+    '/quizzes',
+    '/videos',
+    '/notes',
+    '/flashcards',
+    '/resources',
+    '/calendar',
+    '/announcements',
+    '/messages',
+    '/notifications',
+    '/settings',
+  ],
+  
+  // STUDENT: Learning features - Tasks, Leaderboard, Rewards, Performance, Gamification (Badges, Streaks, Challenges, XP), Teams, Study Groups, Quizzes, Videos, Notes, Learning Analytics, Tournaments, Peer Review, Flashcards, Calendar, Announcements, Resources, Reports, Messages, Notifications, Settings
+  STUDENT: [
+    '/tasks',
+    '/leaderboard',
+    '/rewards',
+    '/performance',
+    '/badges',
+    '/streaks',
+    '/challenges',
+    '/xp-history',
+    '/teams',
+    '/study-groups',
+    '/quizzes',
+    '/videos',
+    '/notes',
+    '/learning-analytics',
+    '/tournaments',
+    '/peer-review',
+    '/flashcards',
+    '/calendar',
+    '/announcements',
+    '/resources',
+    '/reports',
+    '/messages',
+    '/notifications',
+    '/settings',
+  ],
+  
+  // PARENT: Child monitoring - Parent Portal, Child Tasks, Performance, Rewards, Calendar, Announcements, Reports, Messages, Notifications, Settings
+  PARENT: [
+    '/parent-portal',
+    '/tasks',
+    '/performance',
+    '/rewards',
+    '/calendar',
+    '/announcements',
+    '/reports',
+    '/messages',
+    '/notifications',
+    '/settings',
+  ],
 };
 
 // Get the default route for a role (first route in the list)

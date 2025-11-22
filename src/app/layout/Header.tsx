@@ -4,10 +4,18 @@ import { useAuth } from '../global-context/AuthContext';
 import type { UserRole } from '../../shared/types';
 import { useNavigate } from '@tanstack/react-router';
 import { getDefaultRoute } from '../../shared/utils/rolePermissions';
+import { MOCK_APP_NOTIFICATIONS } from '../../shared/mockData';
 
 export const Header = () => {
   const { user, login } = useAuth();
   const navigate = useNavigate();
+  
+  // Calculate unread notifications count
+  const unreadCount = MOCK_APP_NOTIFICATIONS.filter(n => !n.read && n.userId === user?.id).length;
+  
+  const handleNotificationClick = () => {
+    navigate({ to: '/notifications' });
+  };
 
   const handleRoleSwitch = (role: UserRole) => {
     login(role);
@@ -46,9 +54,19 @@ export const Header = () => {
         </div>
 
         <div className="flex items-center gap-4">
-            <button className="relative p-2 text-slate-400 hover:text-slate-600 transition-colors rounded-full hover:bg-slate-50">
+            <button 
+              onClick={handleNotificationClick}
+              className="relative p-2 text-slate-400 hover:text-slate-600 transition-colors rounded-full hover:bg-slate-50"
+            >
                 <Bell className="w-5 h-5" />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+                {unreadCount > 0 && (
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+                )}
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                )}
             </button>
             
             <div className="h-8 w-px bg-slate-200"></div>

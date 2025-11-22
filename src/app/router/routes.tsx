@@ -19,6 +19,18 @@ import { BadgesPage } from '../modules/badges/BadgesPage';
 import { StreaksPage } from '../modules/streaks/StreaksPage';
 import { ChallengesPage } from '../modules/challenges/ChallengesPage';
 import { XPHistoryPage } from '../modules/xp-history/XPHistoryPage';
+import { MessagesPage } from '../modules/messages/MessagesPage';
+import { QuizzesPage } from '../modules/quizzes/QuizzesPage';
+import { NotificationsPage } from '../modules/notifications/NotificationsPage';
+import { TeamsPage } from '../modules/teams/TeamsPage';
+import { StudyGroupsPage } from '../modules/study-groups/StudyGroupsPage';
+import { VideoLessonsPage } from '../modules/videos/VideoLessonsPage';
+import { ParentPortalPage } from '../modules/parent-portal/ParentPortalPage';
+import { NotesPage } from '../modules/notes/NotesPage';
+import { LearningAnalyticsPage } from '../modules/analytics/LearningAnalyticsPage';
+import { TournamentsPage } from '../modules/tournaments/TournamentsPage';
+import { PeerReviewPage } from '../modules/peer-review/PeerReviewPage';
+import { FlashcardsPage } from '../modules/flashcards/FlashcardsPage';
 import { useAuth } from '../global-context/AuthContext';
 import { ProtectedRoute } from '../../shared/components/ProtectedRoute';
 import { getDefaultRoute, isRouteAllowed } from '../../shared/utils/rolePermissions';
@@ -80,7 +92,7 @@ const dashboardExplicitRoute = createRoute({
   getParentRoute: () => authLayoutRoute,
   path: '/dashboard',
   component: () => (
-    <ProtectedRoute allowedRoles={['ADMIN', 'TEACHER']}>
+    <ProtectedRoute allowedRoles={['TEACHER']}>
       <DashboardPage />
     </ProtectedRoute>
   ),
@@ -100,7 +112,7 @@ const leaderboardRoute = createRoute({
   getParentRoute: () => authLayoutRoute,
   path: '/leaderboard',
   component: () => (
-    <ProtectedRoute allowedRoles={['ADMIN', 'TEACHER', 'STUDENT']}>
+    <ProtectedRoute allowedRoles={['TEACHER', 'STUDENT']}>
       <LeaderboardPage />
     </ProtectedRoute>
   ),
@@ -216,7 +228,7 @@ const resourcesRoute = createRoute({
   getParentRoute: () => authLayoutRoute,
   path: '/resources',
   component: () => (
-    <ProtectedRoute allowedRoles={['ADMIN', 'TEACHER', 'STUDENT']}>
+    <ProtectedRoute allowedRoles={['TEACHER', 'STUDENT']}>
       <ResourcesPage />
     </ProtectedRoute>
   ),
@@ -227,7 +239,7 @@ const reportsRoute = createRoute({
   getParentRoute: () => authLayoutRoute,
   path: '/reports',
   component: () => (
-    <ProtectedRoute allowedRoles={['ADMIN', 'TEACHER', 'STUDENT', 'PARENT']}>
+    <ProtectedRoute allowedRoles={['STUDENT', 'PARENT']}>
       <ReportsPage />
     </ProtectedRoute>
   ),
@@ -270,6 +282,129 @@ const xpHistoryRoute = createRoute({
   component: () => (
     <ProtectedRoute allowedRoles={['STUDENT']}>
       <XPHistoryPage />
+    </ProtectedRoute>
+  ),
+});
+
+// Phase 1 New Features Routes
+const messagesRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/messages',
+  component: () => (
+    <ProtectedRoute allowedRoles={['ADMIN', 'TEACHER', 'STUDENT', 'PARENT']}>
+      <MessagesPage />
+    </ProtectedRoute>
+  ),
+});
+
+const quizzesRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/quizzes',
+  component: () => (
+    <ProtectedRoute allowedRoles={['TEACHER', 'STUDENT']}>
+      <QuizzesPage />
+    </ProtectedRoute>
+  ),
+});
+
+const notificationsRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/notifications',
+  component: () => (
+    <ProtectedRoute allowedRoles={['ADMIN', 'TEACHER', 'STUDENT', 'PARENT']}>
+      <NotificationsPage />
+    </ProtectedRoute>
+  ),
+});
+
+const teamsRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/teams',
+  component: () => (
+    <ProtectedRoute allowedRoles={['STUDENT']}>
+      <TeamsPage />
+    </ProtectedRoute>
+  ),
+});
+
+// Phase 2 Routes
+const studyGroupsRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/study-groups',
+  component: () => (
+    <ProtectedRoute allowedRoles={['STUDENT']}>
+      <StudyGroupsPage />
+    </ProtectedRoute>
+  ),
+});
+
+const videosRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/videos',
+  component: () => (
+    <ProtectedRoute allowedRoles={['TEACHER', 'STUDENT']}>
+      <VideoLessonsPage />
+    </ProtectedRoute>
+  ),
+});
+
+const parentPortalRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/parent-portal',
+  component: () => (
+    <ProtectedRoute allowedRoles={['PARENT']}>
+      <ParentPortalPage />
+    </ProtectedRoute>
+  ),
+});
+
+const notesRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/notes',
+  component: () => (
+    <ProtectedRoute allowedRoles={['STUDENT', 'TEACHER']}>
+      <NotesPage />
+    </ProtectedRoute>
+  ),
+});
+
+// Phase 3 Routes
+const learningAnalyticsRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/learning-analytics',
+  component: () => (
+    <ProtectedRoute allowedRoles={['STUDENT']}>
+      <LearningAnalyticsPage />
+    </ProtectedRoute>
+  ),
+});
+
+const tournamentsRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/tournaments',
+  component: () => (
+    <ProtectedRoute allowedRoles={['STUDENT']}>
+      <TournamentsPage />
+    </ProtectedRoute>
+  ),
+});
+
+const peerReviewRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/peer-review',
+  component: () => (
+    <ProtectedRoute allowedRoles={['STUDENT']}>
+      <PeerReviewPage />
+    </ProtectedRoute>
+  ),
+});
+
+const flashcardsRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/flashcards',
+  component: () => (
+    <ProtectedRoute allowedRoles={['STUDENT', 'TEACHER']}>
+      <FlashcardsPage />
     </ProtectedRoute>
   ),
 });
@@ -324,6 +459,18 @@ const routeTree = rootRoute.addChildren([
     streaksRoute,
     challengesRoute,
     xpHistoryRoute,
+    messagesRoute,
+    quizzesRoute,
+    notificationsRoute,
+    teamsRoute,
+    studyGroupsRoute,
+    videosRoute,
+    parentPortalRoute,
+    notesRoute,
+    learningAnalyticsRoute,
+    tournamentsRoute,
+    peerReviewRoute,
+    flashcardsRoute,
     unauthorizedRoute,
   ]),
 ]);
