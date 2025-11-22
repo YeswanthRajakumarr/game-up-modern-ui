@@ -261,7 +261,7 @@ export const TeamsPage = () => {
               )}
 
               {/* Join Button */}
-              {!myTeam && selectedTeam && selectedTeam.id !== myTeam?.id && (
+              {!myTeam && selectedTeam && (
                 <button className="w-full py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors font-semibold flex items-center justify-center gap-2">
                   <UserPlus className="w-5 h-5" />
                   Join Team

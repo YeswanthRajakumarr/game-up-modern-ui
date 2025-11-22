@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { Outlet } from '@tanstack/react-router';
@@ -10,6 +10,10 @@ export const MainLayout = () => {
   const { user } = useAuth();
   const [showNotification, setShowNotification] = useState(false);
   const [hasShownNotification, setHasShownNotification] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    const saved = localStorage.getItem('sidebarCollapsed');
+    return saved ? JSON.parse(saved) : false;
+  });
 
   useEffect(() => {
     // Show notification on first load
@@ -62,8 +66,8 @@ export const MainLayout = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex font-sans">
-      <Sidebar />
-      <div className="flex-1 ml-64 flex flex-col min-h-screen">
+      <Sidebar isCollapsed={isSidebarCollapsed} onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)} />
+      <div className={`flex-1 ${isSidebarCollapsed ? 'ml-20' : 'ml-64'} flex flex-col min-h-screen transition-all duration-300`}>
         <Header />
         <main className="flex-1 p-8 overflow-y-auto">
             <div className="max-w-7xl mx-auto w-full">

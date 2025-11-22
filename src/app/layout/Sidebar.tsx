@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import { 
   LayoutDashboard, 
@@ -27,13 +28,37 @@ import {
   FileText as FileTextIcon,
   BarChart3,
   Users as UsersGroup,
-  ClipboardCheck
+  ClipboardCheck,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { useAuth } from '../global-context/AuthContext';
 import { Icon3D, Icon3DEnhanced } from '../../shared/components/Icon3D';
 
-export const Sidebar = () => {
+interface SidebarProps {
+  isCollapsed?: boolean;
+  onToggle?: () => void;
+}
+
+export const Sidebar = ({ isCollapsed: externalCollapsed, onToggle }: SidebarProps = {}) => {
   const { user, logout } = useAuth();
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    const saved = localStorage.getItem('sidebarCollapsed');
+    return saved ? JSON.parse(saved) : false;
+  });
+
+  useEffect(() => {
+    if (externalCollapsed !== undefined) {
+      setIsCollapsed(externalCollapsed);
+    }
+  }, [externalCollapsed]);
+
+  const toggleCollapse = () => {
+    const newState = !isCollapsed;
+    setIsCollapsed(newState);
+    localStorage.setItem('sidebarCollapsed', JSON.stringify(newState));
+    onToggle?.();
+  };
   
   if (!user) return null;
 
@@ -116,33 +141,47 @@ export const Sidebar = () => {
   const navItems = getNavItems();
 
   return (
-    <aside className="w-64 bg-slate-900 text-white flex flex-col h-screen fixed left-0 top-0 shadow-xl z-50 transition-all duration-300">
-      <div className="p-6 flex items-center gap-3 border-b border-slate-800">
-        <div className="bg-indigo-500 p-2 rounded-lg shadow-lg shadow-indigo-500/20">
-          <Icon3DEnhanced 
-            icon={Gamepad2} 
-            size={24}
-            gradient="linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%)"
-            glow={true}
-            glowColor="#ffffff"
-            color="#ffffff"
-          />
+    <aside className={`${isCollapsed ? 'w-20' : 'w-64'} bg-slate-900 text-white flex flex-col h-screen fixed left-0 top-0 shadow-xl z-50 transition-all duration-300`}>
+      <div className={`${isCollapsed ? 'p-4' : 'p-6'} flex items-center border-b border-slate-800`}>
+        <div className={`flex items-center ${isCollapsed ? 'justify-center gap-2' : 'gap-3'} w-full`}>
+          <div className="bg-indigo-500 p-2 rounded-lg shadow-lg shadow-indigo-500/20 flex-shrink-0">
+            <Icon3DEnhanced 
+              icon={Gamepad2} 
+              size={24}
+              gradient="linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%)"
+              glow={true}
+              glowColor="#ffffff"
+              color="#ffffff"
+            />
+          </div>
+          {!isCollapsed && <h1 className="text-xl font-bold tracking-tight">GameUp</h1>}
+          <button
+            onClick={toggleCollapse}
+            className="p-1.5 rounded-lg hover:bg-slate-800 transition-colors text-slate-400 hover:text-white flex-shrink-0"
+            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {isCollapsed ? (
+              <ChevronRight className="w-4 h-4" />
+            ) : (
+              <ChevronLeft className="w-4 h-4" />
+            )}
+          </button>
         </div>
-        <h1 className="text-xl font-bold tracking-tight">GameUp</h1>
       </div>
 
 
-      <nav className="flex-1 px-3 py-2 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-2 py-2 space-y-1 overflow-y-auto">
         {navItems.map((item) => (
           <Link
             key={item.to}
             to={item.to}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200 group"
+            className={`flex items-center ${isCollapsed ? 'justify-center' : 'gap-3'} ${isCollapsed ? 'px-2' : 'px-4'} py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200 group relative`}
             activeProps={{
               className: "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20"
             }}
+            title={isCollapsed ? item.label : undefined}
           >
-            <div className="group-hover:scale-110 transition-transform duration-200">
+            <div className="group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
               <Icon3D 
                 icon={item.icon} 
                 size={20}
@@ -150,38 +189,29 @@ export const Sidebar = () => {
                 depth={6}
               />
             </div>
-            <span className="font-medium">{item.label}</span>
+            {!isCollapsed && <span className="font-medium whitespace-nowrap">{item.label}</span>}
+            {isCollapsed && (
+              <div className="absolute left-full ml-2 px-2 py-1 bg-slate-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
+                {item.label}
+              </div>
+            )}
           </Link>
         ))}
-        
-        <div className="my-4 border-t border-slate-800 mx-4"></div>
-
-        <Link
-            to="/settings"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200 group"
-            activeProps={{
-              className: "bg-slate-800 text-white"
-            }}
-          >
-            <div className="group-hover:rotate-90 transition-transform duration-300">
-              <Icon3D 
-                icon={Settings} 
-                size={20}
-                color="currentColor"
-                depth={6}
-              />
-            </div>
-            <span className="font-medium">Settings</span>
-        </Link>
       </nav>
 
-      <div className="p-4 border-t border-slate-800">
+      <div className={`p-4 border-t border-slate-800 ${isCollapsed ? 'pb-20' : ''}`}>
         <button 
           onClick={logout}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors"
+          className={`flex items-center ${isCollapsed ? 'justify-center' : 'gap-3'} ${isCollapsed ? 'px-2' : 'px-4'} py-3 w-full rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors relative group`}
+          title={isCollapsed ? 'Sign Out' : undefined}
         >
-          <LogOut className="w-5 h-5" />
-          <span className="font-medium">Sign Out</span>
+          <LogOut className="w-5 h-5 flex-shrink-0" />
+          {!isCollapsed && <span className="font-medium">Sign Out</span>}
+          {isCollapsed && (
+            <div className="absolute left-full ml-2 px-2 py-1 bg-slate-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
+              Sign Out
+            </div>
+          )}
         </button>
       </div>
     </aside>
