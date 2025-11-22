@@ -36,7 +36,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 px-8 flex items-center justify-between sticky top-0 z-40 shadow-sm">
+    <header className="h-16 bg-white border-b border-slate-200 px-6 lg:px-8 flex items-center justify-between sticky top-0 z-40 shadow-sm">
       <div className="flex items-center gap-4 flex-1">
         <div className="relative max-w-md w-full hidden md:block">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -48,9 +48,9 @@ export const Header = () => {
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4 lg:gap-6">
         {/* Role Switcher for Demo */}
-        <div className="hidden lg:flex items-center gap-2 bg-slate-100 p-1 rounded-lg">
+        <div className="hidden xl:flex items-center gap-2 bg-slate-100 p-1 rounded-lg">
             {(['ADMIN', 'TEACHER', 'STUDENT', 'PARENT'] as UserRole[]).map((role) => (
                 <button
                     key={role}
@@ -62,7 +62,7 @@ export const Header = () => {
             ))}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 lg:gap-5">
             <button 
               onClick={handleNotificationClick}
               className="relative p-2 text-slate-400 hover:text-slate-600 transition-colors rounded-full hover:bg-slate-50"
@@ -82,23 +82,21 @@ export const Header = () => {
 
             {/* Level/XP Component for Students */}
             {user?.role === 'STUDENT' && student && (
-              <div className="bg-slate-800 rounded-xl p-3 border border-slate-700/50 backdrop-blur-sm hidden lg:block">
-                <div className="text-xs text-slate-400 uppercase font-semibold mb-1.5">My Level</div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-yellow-400 font-bold text-base">Lvl {level}</span>
-                  <span className="text-slate-300 text-xs">{student.xp} XP</span>
+              <>
+                <div className="hidden lg:block">
+                  <div className="flex items-center justify-between mb-2 gap-3">
+                    <span className="text-yellow-500 font-bold text-lg">Lvl {level}</span>
+                    <span className="text-slate-600 text-sm">{student.xp} XP</span>
+                  </div>
+                  <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                    <div 
+                      className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)] transition-all"
+                      style={{ width: `${Math.min(xpProgress, 100)}%` }}
+                    ></div>
+                  </div>
                 </div>
-                <div className="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
-                  <div 
-                    className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)] transition-all"
-                    style={{ width: `${Math.min(xpProgress, 100)}%` }}
-                  ></div>
-                </div>
-              </div>
-            )}
-
-            {user?.role === 'STUDENT' && student && (
-              <div className="h-8 w-px bg-slate-200 hidden lg:block"></div>
+                <div className="h-8 w-px bg-slate-200 hidden lg:block"></div>
+              </>
             )}
 
             <button
@@ -107,18 +105,18 @@ export const Header = () => {
                   navigate({ to: '/profile' });
                 }
               }}
-              className="flex items-center gap-3 pl-2 hover:opacity-80 transition-opacity"
+              className="flex items-center gap-2.5 lg:gap-3 pl-1 lg:pl-2 hover:opacity-80 transition-opacity"
             >
                 <div className="text-right hidden md:block">
                     <div className="text-sm font-semibold text-slate-700">{user?.name}</div>
                     <div className="text-xs text-slate-500">{user?.role}</div>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-indigo-100 border-2 border-white shadow-sm overflow-hidden">
+                <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-full bg-indigo-100 border-2 border-white shadow-sm overflow-hidden flex-shrink-0">
                     {user?.avatar ? (
                         <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center text-indigo-500">
-                            <UserIcon className="w-5 h-5" />
+                            <UserIcon className="w-4 h-4 lg:w-5 lg:h-5" />
                         </div>
                     )}
                 </div>
