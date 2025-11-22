@@ -1,7 +1,6 @@
-import React from 'react';
 import { Bell, Search, User as UserIcon } from 'lucide-react';
 import { useAuth } from '../global-context/AuthContext';
-import type { UserRole } from '../../shared/types';
+import type { UserRole, Student } from '../../shared/types';
 import { useNavigate } from '@tanstack/react-router';
 import { getDefaultRoute } from '../../shared/utils/rolePermissions';
 import { MOCK_APP_NOTIFICATIONS } from '../../shared/mockData';
@@ -12,6 +11,16 @@ export const Header = () => {
   
   // Calculate unread notifications count
   const unreadCount = MOCK_APP_NOTIFICATIONS.filter(n => !n.read && n.userId === user?.id).length;
+  
+  // Calculate level and XP progress for students
+  const calculateLevel = (xp: number) => {
+    return Math.floor(xp / 500) + 1;
+  };
+  
+  const student = user?.role === 'STUDENT' ? (user as Student) : null;
+  const level = student ? calculateLevel(student.xp) : 1;
+  const currentLevelXP = student ? student.xp % 500 : 0;
+  const xpProgress = (currentLevelXP / 500) * 100;
   
   const handleNotificationClick = () => {
     navigate({ to: '/notifications' });
@@ -70,6 +79,27 @@ export const Header = () => {
             </button>
             
             <div className="h-8 w-px bg-slate-200"></div>
+
+            {/* Level/XP Component for Students */}
+            {user?.role === 'STUDENT' && student && (
+              <div className="bg-slate-800 rounded-xl p-3 border border-slate-700/50 backdrop-blur-sm hidden lg:block">
+                <div className="text-xs text-slate-400 uppercase font-semibold mb-1.5">My Level</div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-yellow-400 font-bold text-base">Lvl {level}</span>
+                  <span className="text-slate-300 text-xs">{student.xp} XP</span>
+                </div>
+                <div className="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                  <div 
+                    className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)] transition-all"
+                    style={{ width: `${Math.min(xpProgress, 100)}%` }}
+                  ></div>
+                </div>
+              </div>
+            )}
+
+            {user?.role === 'STUDENT' && student && (
+              <div className="h-8 w-px bg-slate-200 hidden lg:block"></div>
+            )}
 
             <button
               onClick={() => {
