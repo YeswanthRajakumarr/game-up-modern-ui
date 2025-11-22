@@ -44,7 +44,8 @@ export const Sidebar = ({ isCollapsed: externalCollapsed, onToggle }: SidebarPro
   const { user, logout } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(() => {
     const saved = localStorage.getItem('sidebarCollapsed');
-    return saved ? JSON.parse(saved) : false;
+    // Default to expanded (false) if no saved preference
+    return saved !== null ? JSON.parse(saved) : false;
   });
 
   useEffect(() => {
@@ -154,7 +155,12 @@ export const Sidebar = ({ isCollapsed: externalCollapsed, onToggle }: SidebarPro
               color="#ffffff"
             />
           </div>
-          {!isCollapsed && <h1 className="text-xl font-bold tracking-tight">GameUp</h1>}
+          {!isCollapsed && (
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl font-bold tracking-tight">GameUp</h1>
+              <span className="text-[10px] font-medium bg-yellow-400/20 text-yellow-300 px-1.5 py-0.5 rounded border border-yellow-400/30">(Demo)</span>
+            </div>
+          )}
           <button
             onClick={toggleCollapse}
             className="p-1.5 rounded-lg hover:bg-slate-800 transition-colors text-slate-400 hover:text-white flex-shrink-0"

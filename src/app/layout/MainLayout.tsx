@@ -12,7 +12,8 @@ export const MainLayout = () => {
   const [hasShownNotification, setHasShownNotification] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
     const saved = localStorage.getItem('sidebarCollapsed');
-    return saved ? JSON.parse(saved) : false;
+    // Default to expanded (false) if no saved preference
+    return saved !== null ? JSON.parse(saved) : false;
   });
 
   useEffect(() => {
