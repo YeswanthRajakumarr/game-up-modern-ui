@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+/* 3D Icon Enhancements */
+.icon-3d-container {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.icon-3d-shadow {
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)) 
+          drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Smooth animations */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced hover effects for 3D elements */
+.hover-3d:hover {
+  transform: translateZ(10px) rotateY(5deg);
+  transition: transform 0.3s ease;
+}
