@@ -1,4 +1,4 @@
-import type { User, Task, LeaderboardEntry, Reward, Student, Class, PerformanceData, Notification, Message, Conversation, Quiz, QuizAttempt, AppNotification, Team, StudyGroup, VideoLesson, VideoProgress, Playlist, Note, Tournament, PeerReview, Flashcard, FlashcardDeck, WeakArea, LearningPath, AIInsight, AIPrediction, AIRiskAlert, AIRecommendation } from './types';
+import type { User, Task, LeaderboardEntry, Reward, Student, Class, PerformanceData, Notification, Message, Conversation, Quiz, QuizAttempt, AppNotification, Team, StudyGroup, VideoLesson, VideoProgress, Playlist, Note, Tournament, PeerReview, Flashcard, FlashcardDeck, WeakArea, LearningPath, AIInsight, AIPrediction, AIRiskAlert, AIRecommendation, Badge, Streak, Challenge } from './types';
 
 export const MOCK_USERS: User[] = [
   {
@@ -823,6 +823,73 @@ export const MOCK_WEAK_AREAS: WeakArea[] = [
     score: 70,
     recommendation: 'Review chemical bonding concepts',
     resources: ['v2'],
+  },
+];
+
+// Badges Mock Data
+export const MOCK_BADGES: Badge[] = [
+  { id: 'b1', name: 'First Steps', description: 'Complete your first task', icon: '🎯', rarity: 'COMMON', category: 'ACADEMIC', unlockedAt: '2023-09-01', progress: 1, maxProgress: 1 },
+  { id: 'b2', name: 'Math Wizard', description: 'Score A+ in 5 Math assignments', icon: '🧮', rarity: 'RARE', category: 'ACADEMIC', progress: 3, maxProgress: 5 },
+  { id: 'b3', name: 'Perfect Week', description: 'Complete all tasks for 7 days', icon: '🔥', rarity: 'EPIC', category: 'STREAK', progress: 5, maxProgress: 7 },
+  { id: 'b4', name: 'Early Bird', description: 'Submit 10 tasks before deadline', icon: '⏰', rarity: 'RARE', category: 'ACADEMIC', progress: 7, maxProgress: 10 },
+  { id: 'b5', name: 'Social Butterfly', description: 'Help 5 classmates with tasks', icon: '🦋', rarity: 'COMMON', category: 'SOCIAL', progress: 2, maxProgress: 5 },
+  { id: 'b6', name: 'Centurion', description: 'Earn 10,000 XP', icon: '💯', rarity: 'LEGENDARY', category: 'SPECIAL', progress: 1250, maxProgress: 10000 },
+  { id: 'b7', name: 'Perfect Attendance', description: '100% attendance for a month', icon: '📅', rarity: 'EPIC', category: 'ATTENDANCE', progress: 20, maxProgress: 30 },
+  { id: 'b8', name: 'Top Performer', description: 'Rank #1 on leaderboard', icon: '👑', rarity: 'LEGENDARY', category: 'SPECIAL', unlockedAt: '2023-10-01', progress: 1, maxProgress: 1 },
+];
+
+// Streaks Mock Data
+export const MOCK_STREAKS: Streak[] = [
+  { type: 'LOGIN', current: 12, longest: 15, lastDate: '2023-10-08' },
+  { type: 'TASK_COMPLETION', current: 8, longest: 10, lastDate: '2023-10-08' },
+  { type: 'PERFECT_ATTENDANCE', current: 5, longest: 7, lastDate: '2023-10-08' },
+];
+
+// Challenges Mock Data
+export const MOCK_CHALLENGES: Challenge[] = [
+  {
+    id: 'c1',
+    title: 'Daily Quest: Math Master',
+    description: 'Complete 3 Math tasks today',
+    type: 'DAILY',
+    xpReward: 150,
+    badgeReward: 'b2',
+    progress: 2,
+    target: 3,
+    status: 'ACTIVE',
+    expiresAt: '2023-10-09T23:59:59Z',
+  },
+  {
+    id: 'c2',
+    title: 'Weekly Challenge: Perfect Week',
+    description: 'Complete all assigned tasks this week',
+    type: 'WEEKLY',
+    xpReward: 500,
+    progress: 5,
+    target: 7,
+    status: 'ACTIVE',
+    expiresAt: '2023-10-15T23:59:59Z',
+  },
+  {
+    id: 'c3',
+    title: 'Monthly Goal: XP Collector',
+    description: 'Earn 2000 XP this month',
+    type: 'MONTHLY',
+    xpReward: 1000,
+    progress: 1250,
+    target: 2000,
+    status: 'ACTIVE',
+    expiresAt: '2023-10-31T23:59:59Z',
+  },
+  {
+    id: 'c4',
+    title: 'Special: Science Explorer',
+    description: 'Complete 5 Science quizzes',
+    type: 'SPECIAL',
+    xpReward: 300,
+    progress: 3,
+    target: 5,
+    status: 'ACTIVE',
   },
 ];
 

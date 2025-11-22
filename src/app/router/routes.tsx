@@ -31,6 +31,7 @@ import { LearningAnalyticsPage } from '../modules/analytics/LearningAnalyticsPag
 import { TournamentsPage } from '../modules/tournaments/TournamentsPage';
 import { PeerReviewPage } from '../modules/peer-review/PeerReviewPage';
 import { FlashcardsPage } from '../modules/flashcards/FlashcardsPage';
+import { StudentProfilePage } from '../modules/profile/StudentProfilePage';
 import { useAuth } from '../global-context/AuthContext';
 import { ProtectedRoute } from '../../shared/components/ProtectedRoute';
 import { getDefaultRoute, isRouteAllowed } from '../../shared/utils/rolePermissions';
@@ -409,6 +410,17 @@ const flashcardsRoute = createRoute({
   ),
 });
 
+// Student Profile Route
+const profileRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: '/profile',
+  component: () => (
+    <ProtectedRoute allowedRoles={['STUDENT']}>
+      <StudentProfilePage />
+    </ProtectedRoute>
+  ),
+});
+
 // Catch-all route for unauthorized access
 const unauthorizedRoute = createRoute({
   getParentRoute: () => authLayoutRoute,
@@ -471,6 +483,7 @@ const routeTree = rootRoute.addChildren([
     tournamentsRoute,
     peerReviewRoute,
     flashcardsRoute,
+    profileRoute,
     unauthorizedRoute,
   ]),
 ]);

@@ -28,7 +28,8 @@ import {
   FileText as FileTextIcon,
   BarChart3,
   Users as UsersGroup,
-  ClipboardCheck
+  ClipboardCheck,
+  User as UserIcon
 } from 'lucide-react';
 import { useAuth } from '../global-context/AuthContext';
 import { Icon3D, Icon3DEnhanced } from '../../shared/components/Icon3D';

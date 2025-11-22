@@ -4,7 +4,7 @@ import { MOCK_WEAK_AREAS, MOCK_PERFORMANCE } from '../../../shared/mockData';
 import type { WeakArea } from '../../../shared/types';
 import { useAuth } from '../../global-context/AuthContext';
 import { Icon3DImage } from '../../../shared/components/Icon3DImage';
-import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
+import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, BarChart, Bar } from 'recharts';
 
 export const LearningAnalyticsPage = () => {
   const { user } = useAuth();

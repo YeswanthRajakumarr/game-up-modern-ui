@@ -33,7 +33,7 @@ export const ROLE_ROUTES: Record<UserRole, string[]> = {
     '/settings',
   ],
   
-  // STUDENT: Learning features - Tasks, Leaderboard, Rewards, Performance, Gamification (Badges, Streaks, Challenges, XP), Teams, Study Groups, Quizzes, Videos, Notes, Learning Analytics, Tournaments, Peer Review, Flashcards, Calendar, Announcements, Resources, Reports, Messages, Notifications, Settings
+  // STUDENT: Learning features - Tasks, Leaderboard, Rewards, Performance, Gamification (Badges, Streaks, Challenges, XP), Teams, Study Groups, Quizzes, Videos, Notes, Learning Analytics, Tournaments, Peer Review, Flashcards, Calendar, Announcements, Resources, Reports, Messages, Notifications, Profile, Settings
   STUDENT: [
     '/tasks',
     '/leaderboard',
@@ -58,6 +58,7 @@ export const ROLE_ROUTES: Record<UserRole, string[]> = {
     '/reports',
     '/messages',
     '/notifications',
+    '/profile',
     '/settings',
   ],
   

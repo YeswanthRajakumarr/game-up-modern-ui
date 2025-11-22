@@ -71,7 +71,14 @@ export const Header = () => {
             
             <div className="h-8 w-px bg-slate-200"></div>
 
-            <div className="flex items-center gap-3 pl-2">
+            <button
+              onClick={() => {
+                if (user?.role === 'STUDENT') {
+                  navigate({ to: '/profile' });
+                }
+              }}
+              className="flex items-center gap-3 pl-2 hover:opacity-80 transition-opacity"
+            >
                 <div className="text-right hidden md:block">
                     <div className="text-sm font-semibold text-slate-700">{user?.name}</div>
                     <div className="text-xs text-slate-500">{user?.role}</div>
@@ -85,7 +92,7 @@ export const Header = () => {
                         </div>
                     )}
                 </div>
-            </div>
+            </button>
         </div>
       </div>
     </header>
